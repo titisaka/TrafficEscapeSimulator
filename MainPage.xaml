@@ -29,6 +29,7 @@
                              FontAttributes="Bold"
                              TextColor="White"/>
                     </HorizontalStackLayout>
+                    <!-- Score -->
                     <HorizontalStackLayout HorizontalOptions="Center" Grid.Column="1">
                         <Label  
                                 Text="Score: " 

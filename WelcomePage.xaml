@@ -3,10 +3,55 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TrafficEscapeSimulator.WelcomePage"
              Title="WelcomePage">
-    <VerticalStackLayout>
+    <VerticalStackLayout
+        Padding="30, 0"
+        Spacing="25">
         <Label 
-            Text="Welcome to .NET MAUI!"
+            Text="Traffic Escape Simulator"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+            FontSize="32" 
+            FontAttributes="Bold"/>
+        <!-- Welcome Page Grid -->
+        <Grid 
+            x:Name="MenuGrid"
+            RowDefinitions="*, *"
+            BackgroundColor="AliceBlue">
+            <!-- Logo -->
+            <Grid Grid.Row="0">
+                <Image
+                    Source="trafficescapelogo.png"
+                    Aspect="Center"/>
+            </Grid>
+            
+            <!-- Buttons Menu -->
+            <Grid 
+                Grid.Row="1"
+                RowDefinitions="*, *, *"
+                RowSpacing="10">
+                <Button
+                    x:Name="StartButton"
+                    Grid.Row="0"
+                    FontSize="16"
+                    BackgroundColor="CornflowerBlue"
+                    TextColor="White"
+                    Clicked="StartButton_Clicked"/>
+                <Button
+                    x:Name="InstructionsButton"
+                    Grid.Row="1"
+                    FontSize="16"
+                    BackgroundColor="CornflowerBlue"
+                    TextColor="White"
+                    Clicked="InstructionsButton_Clicked"/>
+                <Button
+                    x:Name="OptionsButton"
+                    Grid.Row="2"
+                    FontSize="16"
+                    BackgroundColor="CornflowerBlue"
+                    TextColor="White"
+                    Clicked="OptionsButton_Clicked"/>
+            </Grid>
+            
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>
