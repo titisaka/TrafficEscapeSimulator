@@ -1,5 +1,9 @@
 namespace TrafficEscapeSimulator;
-
+/*ideas
+ * include save files like in sephiria to implement data binding
+ * (maximum of three save files linked to a username)
+ *
+ */
 public partial class WelcomePage : ContentPage
 {
 	public WelcomePage()
@@ -7,18 +11,18 @@ public partial class WelcomePage : ContentPage
 		InitializeComponent();
 	}
 
-    private void StartButton_Clicked(object sender, EventArgs e)
+    private async void StartButton_Clicked(object sender, EventArgs e)
     {
-
+        await Navigation.PushAsync(new GamePage());
     }
 
-    private void InstructionsButton_Clicked(object sender, EventArgs e)
+    private async void InstructionsButton_Clicked(object sender, EventArgs e)
     {
-
+        await Navigation.PushAsync(new Instructions());
     }
 
-    private void OptionsButton_Clicked(object sender, EventArgs e)
+    private async void OptionsButton_Clicked(object sender, EventArgs e)
     {
-
+        await Navigation.PushAsync(new Options());
     }
 }
