@@ -6,10 +6,6 @@
     <VerticalStackLayout
                 Padding="30,0"
                 Spacing="25">
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
         <Grid x:Name="MainGrid" RowDefinitions="43,577,Auto" BackgroundColor="LightGreen">
             <Image Source="topstad.png" ZIndex="-2" Aspect="AspectFill" Grid.Row="0"/>
             <!-- Score Display Area -->
@@ -63,7 +59,7 @@
 
             <Image 
                         x:Name="GoalsImg" 
-                        Source="goals.jpg"
+                        Source="temproad.png"
                         Aspect="AspectFit"
                         Grid.Row="1" 
                         ZIndex="-1"/>

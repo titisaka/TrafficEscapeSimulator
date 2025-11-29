@@ -9,15 +9,15 @@
                 Spacing="25">
 
             <Label 
-            Text="Traffic Escape Simulator"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            FontSize="32" 
-            FontAttributes="Bold"/>
+                Text="Traffic Escape Simulator"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                FontSize="32" 
+                FontAttributes="Bold"/>
             <!-- Welcome Page Grid -->
             <Grid 
-            x:Name="MenuGrid"
-            RowDefinitions="200, *">
+                x:Name="MenuGrid"
+                RowDefinitions="200, *">
                 <!--BackgroundColor="AliceBlue">-->
                 <!-- Logo -->
                 <Grid Grid.Row="0">
@@ -28,30 +28,33 @@
 
                 <!-- Buttons Menu -->
                 <Grid 
-                Grid.Row="1"
-                RowDefinitions="*, *, *"
-                RowSpacing="10">
-                    <Button
-                    x:Name="StartButton"
-                    Grid.Row="0"
-                    FontSize="32"
-                    BackgroundColor="CornflowerBlue"
-                    TextColor="White"
-                    Clicked="StartButton_Clicked"/>
-                    <Button
-                    x:Name="InstructionsButton"
                     Grid.Row="1"
-                    FontSize="32"
-                    BackgroundColor="CornflowerBlue"
-                    TextColor="White"
-                    Clicked="InstructionsButton_Clicked"/>
+                    RowDefinitions="*, *, *"
+                    RowSpacing="10">
                     <Button
-                    x:Name="OptionsButton"
-                    Grid.Row="2"
-                    FontSize="32"
-                    BackgroundColor="CornflowerBlue"
-                    TextColor="White"
-                    Clicked="OptionsButton_Clicked"/>
+                        x:Name="StartButton"
+                        Grid.Row="0"
+                        FontSize="16"
+                        BackgroundColor="CornflowerBlue"
+                        Text="Start"
+                        TextColor="White"
+                        Clicked="StartButton_Clicked"/>
+                    <Button
+                        x:Name="InstructionsButton"
+                        Grid.Row="1"
+                        FontSize="16"
+                        BackgroundColor="CornflowerBlue"
+                        Text="How To Play"
+                        TextColor="White"
+                        Clicked="InstructionsButton_Clicked"/>
+                    <Button
+                        x:Name="OptionsButton"
+                        Grid.Row="2"
+                        FontSize="16"
+                        BackgroundColor="CornflowerBlue"
+                        Text="Options"
+                        TextColor="White"
+                        Clicked="OptionsButton_Clicked"/>
                 </Grid>
 
             </Grid>
