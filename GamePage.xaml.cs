@@ -64,7 +64,7 @@ public partial class GamePage : ContentPage
         string score = "Your score was: " + _goals;
 
         // Tell the player their results
-        string message = $"Final Score:  goals";
+        string message = $"Final Score: _goals";
         DisplayAlert("Game Over", score, "OK");
 
         //disable grid
@@ -190,6 +190,9 @@ public partial class GamePage : ContentPage
         // Show the feedback label
         FeedbackLbl.Text = "Goal Scored";
         FeedbackLbl.IsVisible = true;
+
+        //check if scorce is better than best score
+        await BestScore();
 
         await Task.Delay(500);
         // Hide the feedback label

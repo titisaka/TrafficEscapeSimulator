@@ -16,13 +16,13 @@
                 <!-- Best Score -->
                 <HorizontalStackLayout HorizontalOptions="Start" Grid.Column="0">
                     <Label 
-                             Text="Best: " 
+                             Text="Best:  " 
                              FontSize="16" 
                              FontAttributes="Bold"
                              TextColor="White"/>
                     <Label 
                              x:Name="BestScoreLbl"
-                             Text=" 0"
+                             Text="0"
                              FontSize="16" 
                              FontAttributes="Bold"
                              TextColor="White"/>
@@ -30,13 +30,13 @@
                 <!-- Score -->
                 <HorizontalStackLayout HorizontalOptions="Center" Grid.Column="1">
                     <Label  
-                                Text="Score: " 
+                                Text="Score:  " 
                                 FontSize="18" 
                                 FontAttributes="Bold"
                                 TextColor="Yellow"/>
                     <Label 
                                 x:Name="ScoreLbl" 
-                                Text=" 0"
+                                Text="0"
                                 FontSize="18" 
                                 FontAttributes="Bold"
                                 TextColor="Yellow"/>
@@ -64,21 +64,23 @@
                         Grid.Row="1" 
                         ZIndex="-1"/>
             <!-- Game Area -->
+            <!-- This is the main space that gameplay will take place -->
             <Grid Grid.Row="1" x:Name="GameArea">
 
                 <!-- Goal/Goalkeeper Area (Top) -->
                 <Image 
                            x:Name="GoalKeeper" 
-                           Source="goalie.png" 
-                           WidthRequest="136"
+                           Source="audi.png" 
+                           WidthRequest="128"
                            Aspect="Fill"
-                           HeightRequest="204"
+                           HeightRequest="128"
                            VerticalOptions="Start"
                            HorizontalOptions="Center"
                            Margin="0,100,0,0"
+                           IsVisible="True"
                            ZIndex="1"/>
 
-                <!-- Ball (Bottom) -->
+                <!-- Ball (Bottom)-->
                 <Image 
                            x:Name="FootballImg"
                            Source="football.png" 
@@ -86,10 +88,11 @@
                            HeightRequest="55"
                            VerticalOptions="End"
                            HorizontalOptions="Center"
+                           IsVisible="False"
                            Margin="0,0,0,50"
                            ZIndex="2"/>
 
-                <!-- Feedback Label (for GOAL/SAVED messages) -->
+                <!-- Feedback Label (for 3s countdown at beginning of game)-->
                 <Label 
                            x:Name="FeedbackLbl"
                            Text="Goal Scored" 
