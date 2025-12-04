@@ -85,12 +85,14 @@ public partial class GamePage : ContentPage
         ControlGrid.IsVisible = true;
 
         // Start the goalie animating
-        _goaliePosition = "centre";
-        await AnimateGoalKeeper();
+        //_goaliePosition = "centre";
+        //await AnimateGoalKeeper();
 
     }
 
-    private async Task AnimateGoalKeeper()
+    /*Using
+     * 
+     * private async Task AnimateCars()
     {
         while (_gamePlaying)
         {
@@ -115,7 +117,7 @@ public partial class GamePage : ContentPage
             _goaliePosition = "centre";
             await GoalKeeper.TranslateTo(0, 0, 1000);
         }
-    }
+    }*/
 
     private void StartBtn_Clicked(object sender, EventArgs e)
     {
@@ -123,7 +125,9 @@ public partial class GamePage : ContentPage
         timer.Start();
     }
 
-    /*private void ShootButton_Clicked(object sender, EventArgs e)
+    /*Using
+     * 
+     * private void ShootButton_Clicked(object sender, EventArgs e)
     {
         if (!_ballMoving)
         {
@@ -143,7 +147,9 @@ public partial class GamePage : ContentPage
         }
     }*/
 
-    /*private async void MoveBall(string direction)
+    /*Using
+     * 
+     * private async void MoveBall(string direction)
     {
         ControlGrid.IsVisible = false;
         _ballMoving = true;
@@ -181,7 +187,9 @@ public partial class GamePage : ContentPage
         ControlGrid.IsVisible = true;
     }*/
 
-    private async Task ScoreGoal()
+    /*Using
+     * 
+     * private async Task ScoreGoal()
     {
         // Increase goals and update label
         _goals += 1;
@@ -197,8 +205,11 @@ public partial class GamePage : ContentPage
         await Task.Delay(500);
         // Hide the feedback label
         FeedbackLbl.IsVisible = false;
-    }
+    }*/
 
+    /* Not Using
+     * 
+     * 
     private async Task SaveShot()
     {
 
@@ -212,14 +223,16 @@ public partial class GamePage : ContentPage
 
         // Hide the feedback label
         FeedbackLbl.IsVisible = false;
-    }
+    }*/
 
-    private async Task BestScore()
+    /*Using
+     * 
+     * private async Task BestScore()
     {
         if (topScore < _goals)
         {
             topScore = _goals;
         }
         BestScoreLbl.Text = topScore.ToString();
-    }
+    }*/
 }
