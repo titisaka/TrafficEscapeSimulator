@@ -123,7 +123,7 @@ public partial class GamePage : ContentPage
         timer.Start();
     }
 
-    private void ShootButton_Clicked(object sender, EventArgs e)
+    /*private void ShootButton_Clicked(object sender, EventArgs e)
     {
         if (!_ballMoving)
         {
@@ -141,9 +141,9 @@ public partial class GamePage : ContentPage
                 MoveBall("centre");
             }
         }
-    }
+    }*/
 
-    private async void MoveBall(string direction)
+    /*private async void MoveBall(string direction)
     {
         ControlGrid.IsVisible = false;
         _ballMoving = true;
@@ -179,7 +179,7 @@ public partial class GamePage : ContentPage
         FootballImg.ScaleTo(1, 1);
         _ballMoving = false;
         ControlGrid.IsVisible = true;
-    }
+    }*/
 
     private async Task ScoreGoal()
     {

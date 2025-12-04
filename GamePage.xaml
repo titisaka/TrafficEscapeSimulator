@@ -66,10 +66,10 @@
             <!-- Game Area -->
             <!-- This is the main space that gameplay will take place -->
             <Grid Grid.Row="1" x:Name="GameArea">
-
-                <!-- Goal/Goalkeeper Area (Top) -->
-                <Image 
-                           x:Name="GoalKeeper" 
+                <!-- Road/Car Lanes Area (Where cars will be moving) -->
+                <Grid Grid.Column="0" x:Name="Lane1">
+                    <Image 
+                           x:Name="Car1" 
                            Source="audi.png" 
                            WidthRequest="128"
                            Aspect="Fill"
@@ -80,6 +80,53 @@
                            IsVisible="True"
                            ZIndex="1"/>
 
+
+                </Grid>
+                <Grid Grid.Column="1" x:Name="Lane2">
+                    <Image 
+                           x:Name="Car2" 
+                           Source="taxi.png" 
+                           WidthRequest="128"
+                           Aspect="Fill"
+                           HeightRequest="128"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Center"
+                           Margin="0,100,0,0"
+                           IsVisible="True"
+                           ZIndex="1"/>
+
+
+                </Grid>
+                <Grid Grid.Column="2" x:Name="Lane3">
+                    <Image 
+                           x:Name="Car3" 
+                           Source="blackviper.png" 
+                           WidthRequest="128"
+                           Aspect="Fill"
+                           HeightRequest="128"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Center"
+                           Margin="0,100,0,0"
+                           IsVisible="True"
+                           ZIndex="1"/>
+
+
+                </Grid>
+                <Grid Grid.Column="3" x:Name="Lane4">
+                    <Image 
+                           x:Name="Car4" 
+                           Source="minitruck.png" 
+                           WidthRequest="128"
+                           Aspect="Fill"
+                           HeightRequest="128"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Center"
+                           Margin="0,100,0,0"
+                           IsVisible="True"
+                           ZIndex="1"/>
+
+
+                </Grid>
                 <!-- Ball (Bottom)-->
                 <Image 
                            x:Name="FootballImg"
