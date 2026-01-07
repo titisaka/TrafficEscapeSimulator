@@ -9,6 +9,9 @@
     <ShellContent
         Title="Traffic Escape"
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+        Route="MainPage"/>
+        <!-- isVisable as false has prevented the use of the back button
+             a weird solution, but a solution nonetheless 
+             will try to find something a bit more elegant later -->
+    <!-- DO NOT TOUCH -->
 </Shell>

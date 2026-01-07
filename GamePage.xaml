@@ -6,8 +6,8 @@
     <VerticalStackLayout
                 Padding="30,0"
                 Spacing="25">
-        <Grid x:Name="MainGrid" RowDefinitions="43,577,Auto" BackgroundColor="LightGreen">
-            <Image Source="topstad.png" ZIndex="-2" Aspect="AspectFill" Grid.Row="0"/>
+        <Grid x:Name="MainGrid" RowDefinitions="43,577,Auto" BackgroundColor="Grey">
+            <!--<Image Source="topstad.png" ZIndex="-2" Aspect="AspectFill" Grid.Row="0"/>-->
             <!-- Score Display Area -->
             <Grid 
                     Grid.Row="0" 
@@ -57,92 +57,115 @@
                 </HorizontalStackLayout>
             </Grid>
             
-
-            <Image 
-                        x:Name="GoalsImg" 
-                        Source="temproad.png"
-                        Aspect="AspectFit"
-                        Grid.Row="1" 
-                        ZIndex="-1"/>
             <!-- Game Area -->
             <!-- This is the main space that gameplay will take place -->
             <Grid 
                 Grid.Row="1" 
                 x:Name="GameArea"
-                ColumnDefinitions="*, *, *, *"
+                ColumnDefinitions="*, *, *"
                 ColumnSpacing="10">
+                <!-- Player's Car (Starts in Center)-->
+                <!-- made redunandt with the discorvery of generating elements in c#
+                <Image 
+                    Grid.Column="1"
+                    x:Name="PlayerCar" 
+                    Source="car.png"
+                    WidthRequest="128"
+                    Aspect="Fill"
+                    HeightRequest="128"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Margin="0,100,0,0"
+                    ZIndex="1"/>-->
+                
                 <!-- Road/Car Lanes Area (Where cars will be moving) -->
                 <Grid Grid.Column="0" x:Name="Lane1">
                     <Image 
-                           x:Name="Car1" 
+                           x:Name="Lane1Car1" 
                            Source="audi.png" 
                            WidthRequest="128"
                            Aspect="Fill"
                            HeightRequest="128"
-                           VerticalOptions="Start"
+                           VerticalOptions="End"
                            HorizontalOptions="Center"
                            Margin="0,100,0,0"
-                           IsVisible="True"
+                           IsVisible="False"
+                           ZIndex="1"/>
+
+                    <Image 
+                           x:Name="Lane1Car2" 
+                           Source="blackviper.png" 
+                           WidthRequest="128"
+                           Aspect="Fill"
+                           HeightRequest="128"
+                           VerticalOptions="End"
+                           HorizontalOptions="Center"
+                           Margin="0,100,0,0"
+                           IsVisible="False"
                            ZIndex="1"/>
 
 
                 </Grid>
+
                 <Grid Grid.Column="1" x:Name="Lane2">
                     <Image 
-                           x:Name="Car2" 
+                           x:Name="Lane2Car1" 
                            Source="taxi.png" 
                            WidthRequest="128"
                            Aspect="Fill"
                            HeightRequest="128"
-                           VerticalOptions="Start"
+                           VerticalOptions="End"
                            HorizontalOptions="Center"
                            Margin="0,100,0,0"
-                           IsVisible="True"
+                           IsVisible="False"
                            ZIndex="1"/>
 
-
-                </Grid>
-                <Grid Grid.Column="2" x:Name="Lane3">
                     <Image 
-                               x:Name="Car3" 
-                               Source="blackviper.png" 
-                               WidthRequest="128"
-                               Aspect="Fill"
-                               HeightRequest="128"
-                               VerticalOptions="Start"
-                               HorizontalOptions="Center"
-                               Margin="0,100,0,0"
-                               IsVisible="True"
-                               ZIndex="1"/>
-                </Grid>
-                <Grid Grid.Column="3" x:Name="Lane4">
-                    <Image 
-                               x:Name="Car4" 
+                               x:Name="Lane2Car2" 
                                Source="minitruck.png" 
                                WidthRequest="128"
                                Aspect="Fill"
                                HeightRequest="128"
-                               VerticalOptions="Start"
-                               HorizontalOptions="Center"
-                               Margin="0,100,0,0"
-                               IsVisible="True"
-                               ZIndex="1"/>
-                </Grid>
-            </Grid>
-            
-                <!-- Ball (Bottom)
-                <Image 
-                               x:Name="FootballImg"
-                               Source="football.png" 
-                               WidthRequest="55"
-                               HeightRequest="55"
                                VerticalOptions="End"
                                HorizontalOptions="Center"
+                               Margin="0,100,0,0"
                                IsVisible="False"
-                               Margin="0,0,0,50"
-                               ZIndex="2"/>
+                               ZIndex="1"/>
 
-                Feedback Label (for 3s countdown at beginning of game)
+
+                    
+
+                </Grid>
+                <Grid Grid.Column="2" x:Name="Lane3">
+                    <Image 
+                        x:Name="Lane3Car1" 
+                        Source="blackviper.png" 
+                        WidthRequest="128"
+                        Aspect="Fill"
+                        HeightRequest="128"
+                        VerticalOptions="End"
+                        HorizontalOptions="Center"
+                        Margin="0,100,0,0"
+                        IsVisible="False"
+                        ZIndex="1"/>
+
+                    <Image 
+                               x:Name="Lane3Car2"
+                               Source="ambulance.png" 
+                               WidthRequest="128"
+                               Aspect="Fill"
+                               HeightRequest="128"
+                               VerticalOptions="End"
+                               HorizontalOptions="Center"
+                               Margin="0,100,0,0"
+                               IsVisible="False"
+                               ZIndex="1"/>
+                    
+                </Grid>
+                
+            </Grid>
+            
+                <!-- Feedback Label (for 3s countdown at beginning of game)
                 <Label 
                                x:Name="FeedbackLbl"
                                Text="Goal Scored" 
@@ -170,8 +193,8 @@
                             x:Name="ControlGrid" Grid.Row="2" 
                             ColumnDefinitions="*,*,*" 
                             ColumnSpacing="10" IsVisible="False">
-                <!--<Button 
-                            Text="Shoot Left" 
+                <Button 
+                            Text="Left" 
                             Grid.Column="0"
                             FontSize="16"
                             BackgroundColor="Red"
@@ -179,20 +202,20 @@
                             Clicked="ShootButton_Clicked"/>
 
                     <Button
-                            Text="Shoot Centre" 
+                            Text="Centre" 
                             Grid.Column="1"
                             FontSize="16"
                             BackgroundColor="Red"
                             TextColor="White"
                             Clicked="ShootButton_Clicked"/>
 
-                    <Button 
-                            Text="Shoot Right" 
+                <Button 
+                            Text="Right" 
                             Grid.Column="2"
                             FontSize="16"
                             BackgroundColor="Red"
                             TextColor="White"
-                            Clicked="ShootButton_Clicked"/>-->
+                            Clicked="ShootButton_Clicked"/>
             </Grid>
         </Grid>
     </VerticalStackLayout>

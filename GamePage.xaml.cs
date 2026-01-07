@@ -1,3 +1,4 @@
+using Microsoft.Maui.Controls;
 using System.Timers;
 
 namespace TrafficEscapeSimulator;
@@ -5,9 +6,9 @@ namespace TrafficEscapeSimulator;
 public partial class GamePage : ContentPage
 {
     private bool _gamePlaying = false, _ballMoving = false;
-    private int _goals, _timeLeft;
+    private int _distance, _timeLeft;
     Random random;
-    private string _goaliePosition;
+    private string _carPosition;
     private int interval = 1000;
     private int topScore = 0;
 
@@ -61,10 +62,10 @@ public partial class GamePage : ContentPage
 
         // Hide the buttons to kick the ball
 
-        string score = "Your score was: " + _goals;
+        string score = "Your score was: " + _distance;
 
         // Tell the player their results
-        string message = $"Final Score: _goals";
+        string message = $"Final Score: _distance";
         DisplayAlert("Game Over", score, "OK");
 
         //disable grid
@@ -72,26 +73,29 @@ public partial class GamePage : ContentPage
         //enable start button
         StartBtn.IsVisible = true;
         //reset goal score
-        _goals = 0;
-        ScoreLbl.Text = _goals.ToString();
+        _distance = 0;
+        ScoreLbl.Text = _distance.ToString();
+
+        //note, delay this task by a few seconds
+        GameArea.Clear();
     }
 
     private async void StartGame()
     {
-
+        
         _gamePlaying = true;
         _timeLeft = 30;
         StartBtn.IsVisible = false;
         ControlGrid.IsVisible = true;
 
-        // Start the goalie animating
-        //_goaliePosition = "centre";
+        // Map Car Position for detecting collision
+        _carPosition = "centre";
         //await AnimateGoalKeeper();
 
     }
 
     /*Using
-     * 
+     *for animating the moving cars
      * private async Task AnimateCars()
     {
         while (_gamePlaying)
@@ -102,19 +106,19 @@ public partial class GamePage : ContentPage
             if (leftorright == 0)
             {
                 direction = -1;
-                _goaliePosition = "left";
+                _carPosition = "left";
             }
             else
             {
                 direction = 1;
-                _goaliePosition = "right";
+                _carPosition = "right";
             }
 
             // Goalkeeper should move a distance of above in the correct direction.
             await GoalKeeper.TranslateTo((goalkeeperDistance * direction), 0, 1000);
 
             // Now go back to the centre
-            _goaliePosition = "centre";
+            _carPosition = "centre";
             await GoalKeeper.TranslateTo(0, 0, 1000);
         }
     }*/
@@ -125,11 +129,73 @@ public partial class GamePage : ContentPage
         timer.Start();
     }
 
-    /*Using
-     * 
-     * private void ShootButton_Clicked(object sender, EventArgs e)
+     private void ShootButton_Clicked(object sender, EventArgs e)
     {
-        if (!_ballMoving)
+        //annoying asf but I'll rewrite this, just need the visual for now
+        //*made it less annoying already, yippee!
+        Button btn = (Button)sender;
+        //note that source will be interchangeable for player car selection
+        //this will be moved to the big global guy keep an eye out
+        Image playerCar = new Image {
+            Source = "car.png",
+            WidthRequest = 128,
+            HeightRequest = 128,
+            Aspect = Aspect.Fill,
+            VerticalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.Center,
+            ZIndex = 1
+        };
+
+        //i hate nested if statements but what needs to be done needs to be done
+        //this could probably be done with numbers for efficiency but i'm so tired man and this works just fine
+        //this project has crashed so much i'm surprised i haven't completely given up already
+        //moves can to left
+        if (btn.Text == "Left")
+        {
+            if (_carPosition == "centre")
+            {
+                _carPosition = "left";
+                Lane2.Clear();
+                Lane1.Add(playerCar);
+            }
+
+            else if (_carPosition == "right")
+            {
+                _carPosition = "centre";
+                Lane3.Clear();
+                Lane2.Add(playerCar);
+            }
+
+            else { }
+        }
+
+        //moves car to the right
+        else if (btn.Text == "Right")
+        {
+            if (_carPosition == "centre")
+            {
+                _carPosition = "right";
+                // Lane2.Remove(playerCar); //why aren't you working :(
+                Lane2.Clear();
+                Lane3.Add(playerCar);
+            }
+
+            else if (_carPosition == "left")
+            {
+                _carPosition = "centre";
+                Lane1.Clear();
+                Lane2.Add(playerCar);
+            }
+
+            else { }
+        }
+        else if (btn.Text == "Centre")
+        {
+            //button to be removed; redundant
+        }
+
+        /*Keeping for possible car animation, just using static movements for now
+         * if (!_ballMoving)
         {
             Button btn = (Button)sender;
             if (btn.Text == "Shoot Left")
@@ -144,12 +210,12 @@ public partial class GamePage : ContentPage
             {
                 MoveBall("centre");
             }
-        }
-    }*/
+        }*/
+    }
 
     /*Using
      * 
-     * private async void MoveBall(string direction)
+     * private async void MoveCar(string direction)
     {
         ControlGrid.IsVisible = false;
         _ballMoving = true;
@@ -170,7 +236,7 @@ public partial class GamePage : ContentPage
         {
             await FootballImg.TranslateTo(0, moveY, 1000);
         }
-        if (direction != _goaliePosition)
+        if (direction != _carPosition)
         {
             await ScoreGoal();
         }
@@ -192,8 +258,8 @@ public partial class GamePage : ContentPage
      * private async Task ScoreGoal()
     {
         // Increase goals and update label
-        _goals += 1;
-        ScoreLbl.Text = _goals.ToString();
+        _distance += 1;
+        ScoreLbl.Text = _distance.ToString();
 
         // Show the feedback label
         FeedbackLbl.Text = "Goal Scored";
@@ -229,9 +295,9 @@ public partial class GamePage : ContentPage
      * 
      * private async Task BestScore()
     {
-        if (topScore < _goals)
+        if (topScore < _distance)
         {
-            topScore = _goals;
+            topScore = _distance;
         }
         BestScoreLbl.Text = topScore.ToString();
     }*/
