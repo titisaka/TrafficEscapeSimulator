@@ -7,7 +7,7 @@
                 Padding="30,0"
                 Spacing="25">
         <Grid x:Name="MainGrid" RowDefinitions="43,577,Auto" BackgroundColor="Grey">
-            <!--<Image Source="topstad.png" ZIndex="-2" Aspect="AspectFill" Grid.Row="0"/>-->
+            <Image Source="banner.png" ZIndex="-2" Aspect="AspectFill" Grid.Row="0"/>
             <!-- Score Display Area -->
             <Grid 
                     Grid.Row="0" 
@@ -50,7 +50,7 @@
                                TextColor="White"/>
                     <Label 
                                 x:Name="timer_lbl"
-                                Text="30"
+                                Text="60"
                                 FontSize="16" 
                                 FontAttributes="Bold"
                                 TextColor="White"/>
@@ -163,9 +163,8 @@
                     
                 </Grid>
                 
-            </Grid>
-            
                 <!-- Feedback Label (for 3s countdown at beginning of game)
+                     Using as tester temporarily -->
                 <Label 
                                x:Name="FeedbackLbl"
                                Text="Goal Scored" 
@@ -175,8 +174,11 @@
                                HorizontalOptions="Center"
                                VerticalOptions="Center"
                                IsVisible="False"
-                               ZIndex="3"/> -->
-        
+                               ZIndex="3"/>
+                
+            </Grid>
+            
+
 
             <Button 
                             x:Name="StartBtn" 

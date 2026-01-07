@@ -11,8 +11,38 @@ public partial class GamePage : ContentPage
     private string _carPosition;
     private int interval = 1000;
     private int topScore = 0;
+    private int carInterval = 5000;
 
     private System.Timers.Timer timer;
+
+    //note that source will be interchangeable for player car selection
+    //this will be moved to the big global guy keep an eye out * moved to big global guy!
+    //remembered that i can put multiple variables on the same line
+    //nvm
+    Image playerCar = new Image
+    {
+        Source = "car.png",
+        WidthRequest = 128,
+        HeightRequest = 128,
+        Aspect = Aspect.Fill,
+        VerticalOptions = LayoutOptions.Center,
+        HorizontalOptions = LayoutOptions.Center,
+        ZIndex = 1
+    };
+
+    /* wwas used for the Cars() Task but it didn't work as expected
+     * Image car1 = new Image
+    {
+        Source = "car.png",
+        WidthRequest = 128,
+        HeightRequest = 128,
+        Aspect = Aspect.Fill,
+        VerticalOptions = LayoutOptions.Center,
+        HorizontalOptions = LayoutOptions.Center,
+        ZIndex = 1
+    };*/
+
+    private string[] cars = { "ambulance.png", "audi.png", "blackviper.png", "minitruck.png", "minivan.png", "police.png", "taxi.png", "truck.png" };
 
     public GamePage()
     {
@@ -50,7 +80,7 @@ public partial class GamePage : ContentPage
         {
             timer.Stop();
             EndGame();
-            _timeLeft = 30;
+            _timeLeft = 60;
         }
     }
 
@@ -77,51 +107,143 @@ public partial class GamePage : ContentPage
         ScoreLbl.Text = _distance.ToString();
 
         //note, delay this task by a few seconds
-        GameArea.Clear();
+        //did not realise that this fully removes the grid, may need to adjust accordingly
+        //GameArea.Clear();
     }
 
     private async void StartGame()
     {
-        
+        //setting and resetting values at the top of each game
         _gamePlaying = true;
-        _timeLeft = 30;
+        _timeLeft = 60;
+        carInterval = 10000;
         StartBtn.IsVisible = false;
         ControlGrid.IsVisible = true;
 
         // Map Car Position for detecting collision
         _carPosition = "centre";
-        //await AnimateGoalKeeper();
+
+        //random moving cars
+        await Task.Delay(500);
+        await AnimateCars();
 
     }
 
-    /*Using
-     *for animating the moving cars
-     * private async Task AnimateCars()
+    //for animating the moving cars
+    private async Task AnimateCars()
     {
         while (_gamePlaying)
         {
-            double goalkeeperDistance = 220;
-            int leftorright = random.Next(2);
-            int direction = 1;
-            if (leftorright == 0)
+            //double roadLength = 577; this is a fixed value so might just forgo having it saved as a variable
+            int whichLane = random.Next(3), whichCar = random.Next(8);
+            //await Cars();
+            //int direction = 1;
+            //string src;
+
+            if (whichLane == 0)
             {
-                direction = -1;
-                _carPosition = "left";
+                // cars will be moving up from bottom to top then disappearing
+                // add a fadeto at the end later for aesthetics, focus on function for now
+                Lane1Car1.IsVisible = true;
+                await Lane1Car1.TranslateTo(0, -456, (uint)carInterval);
+                Lane1Car1.IsVisible = false;
+                await Lane1Car1.TranslateTo(0, 577, 1000);
+
+                //changes the car each time to avoid repeats
+                Lane1Car1.Source = cars[whichCar];
+
+                FeedbackLbl.Text = "Ran Car 1";
+                FeedbackLbl.IsVisible = true;
+                await Task.Delay(500);
+                FeedbackLbl.IsVisible = false;
             }
+            else if (whichLane == 1)
+            {
+                // cars will be moving up from bottom to top then disappearing
+                // add a fadeto at the end later for aesthetics, focus on function for now
+                Lane2Car1.IsVisible = true;
+                await Lane2Car1.TranslateTo(0, -456, (uint)carInterval);
+                Lane2Car1.IsVisible = false;
+                await Lane2Car1.TranslateTo(0, 577, 1000);
+
+                //changes the car each time to avoid repeats
+                Lane2Car1.Source = cars[whichCar];
+
+                FeedbackLbl.Text = "Ran Car 2";
+                FeedbackLbl.IsVisible = true;
+                await Task.Delay(500);
+                FeedbackLbl.IsVisible = false;
+            }
+
             else
             {
-                direction = 1;
-                _carPosition = "right";
+                // cars will be moving up from bottom to top then disappearing
+                // add a fadeto at the end later for aesthetics, focus on function for now
+                Lane3Car1.IsVisible = true;
+                await Lane3Car1.TranslateTo(0, -456, (uint)carInterval);
+                Lane3Car1.IsVisible = false;
+                await Lane3Car1.TranslateTo(0, 577, 1000);
+
+                //changes the car each time to avoid repeats
+                Lane3Car1.Source = cars[whichCar];
+
+                FeedbackLbl.Text = "Ran Car 3";
+                FeedbackLbl.IsVisible = true;
+                await Task.Delay(500);
+                FeedbackLbl.IsVisible = false;
             }
 
-            // Goalkeeper should move a distance of above in the correct direction.
-            await GoalKeeper.TranslateTo((goalkeeperDistance * direction), 0, 1000);
+            /*
+             * if (whichLane == 0)
+            {
+                Lane1.Add(car1);
+                await car1.TranslateTo(0, -456, (uint)carInterval);
+                car1.IsVisible = false;
+                await car1.TranslateTo(0, 577, 1000);
 
-            // Now go back to the centre
+            }
+            else if (whichLane == 1)
+            {
+                Lane2.Add(car2);
+                await car2.TranslateTo(0, -456, (uint)carInterval);
+                car2.IsVisible = false;
+                await car2.TranslateTo(0, 577, 1000);
+            }
+
+            else
+            {
+                Lane3.Add(car3);
+                await car3.TranslateTo(0, -456, (uint)carInterval);
+                car3.IsVisible = false;
+                await car3.TranslateTo(0, 577, 1000);
+            }
+             */
+
+            /* tried this and it didn't work
+             * maybe due to how i set the variables?
+             * or it could just be that it can't read from the array, even when it's converted to a string
+            else
+            {
+                src = cars[(whichCar + 1)].ToString();
+                car3.Source = src;
+                Lane3.Add(car3);
+                await car3.TranslateTo(0, -456, (uint)carInterval);
+                car3.IsVisible = false;
+                await car3.TranslateTo(0, 577, 1000);
+            }*/
+
+            /*// cars will be moving up from bottom to top then disappearing
+            // add a fadeto at the end later for aesthetics, focus on function for now
+            Lane1Car1.IsVisible = true;
+        await Lane1Car1.TranslateTo(0, -456, (uint)carInterval);
+        Lane1Car1.IsVisible = false;
+        await Lane1Car1.TranslateTo(0, 577, 1000);*/
+
+            /*// Now go back to the centre
             _carPosition = "centre";
-            await GoalKeeper.TranslateTo(0, 0, 1000);
+            await GoalKeeper.TranslateTo(0, 0, 1000);*/
         }
-    }*/
+    }
 
     private void StartBtn_Clicked(object sender, EventArgs e)
     {
@@ -134,17 +256,7 @@ public partial class GamePage : ContentPage
         //annoying asf but I'll rewrite this, just need the visual for now
         //*made it less annoying already, yippee!
         Button btn = (Button)sender;
-        //note that source will be interchangeable for player car selection
-        //this will be moved to the big global guy keep an eye out
-        Image playerCar = new Image {
-            Source = "car.png",
-            WidthRequest = 128,
-            HeightRequest = 128,
-            Aspect = Aspect.Fill,
-            VerticalOptions = LayoutOptions.Center,
-            HorizontalOptions = LayoutOptions.Center,
-            ZIndex = 1
-        };
+
 
         //i hate nested if statements but what needs to be done needs to be done
         //this could probably be done with numbers for efficiency but i'm so tired man and this works just fine
@@ -155,14 +267,14 @@ public partial class GamePage : ContentPage
             if (_carPosition == "centre")
             {
                 _carPosition = "left";
-                Lane2.Clear();
+                //Lane2.Clear();
                 Lane1.Add(playerCar);
             }
 
             else if (_carPosition == "right")
             {
                 _carPosition = "centre";
-                Lane3.Clear();
+                //Lane3.Clear();
                 Lane2.Add(playerCar);
             }
 
@@ -176,14 +288,14 @@ public partial class GamePage : ContentPage
             {
                 _carPosition = "right";
                 // Lane2.Remove(playerCar); //why aren't you working :(
-                Lane2.Clear();
+                //Lane2.Clear();
                 Lane3.Add(playerCar);
             }
 
             else if (_carPosition == "left")
             {
                 _carPosition = "centre";
-                Lane1.Clear();
+                //Lane1.Clear();
                 Lane2.Add(playerCar);
             }
 
@@ -212,6 +324,51 @@ public partial class GamePage : ContentPage
             }
         }*/
     }
+
+    //was for changing sources, decided to try an array instaed
+    /*private async Task Cars()
+    {
+        int whichCar = random.Next(3);
+
+        switch (whichCar)
+        {
+            case 0:
+                car1.Source = "ambulance.png";
+                car2.Source = "blackviper.png";
+                car3.Source = "minivan.png";
+                car4.Source = "taxi.png";
+                car5.Source = "audi.png";
+                car6.Source = "minitruck.png";
+                break;
+
+            case 1:
+                car1.Source = "audi.png";
+                car2.Source = "minitruck.png";
+                car3.Source = "police.png";
+                car4.Source = "truck.png";
+                car5.Source = "minivan.png";
+                car6.Source = "taxi.png";
+                break;
+
+            case 2:
+                car1.Source = "taxi.png";
+                car2.Source = "truck.png";
+                car3.Source = "police.png";
+                car4.Source = "minivan.png";
+                car5.Source = "ambulance.png";
+                car6.Source = "blackviper.png";
+                break;
+
+            default:
+                car1.Source = "taxi.png";
+                car2.Source = "truck.png";
+                car3.Source = "police.png";
+                car4.Source = "minitruck.png";
+                car5.Source = "minivan.png";
+                car6.Source = "ambulance.png";
+                break;
+        }
+    }*/
 
     /*Using
      * 
