@@ -1,24 +1,22 @@
 using Microsoft.Maui.Controls;
 using System.Timers;
+using System.Xml.Linq;
 
 namespace TrafficEscapeSimulator;
 
 public partial class GamePage : ContentPage
 {
-    private bool _gamePlaying = false, _ballMoving = false;
-    private int _distance, _timeLeft;
+    private bool _gamePlaying = false;
+    private int _distance, _timePassed;
     Random random;
     private string _carPosition;
     private int interval = 1000;
     private int topScore = 0;
-    private int carInterval = 5000;
+    public int carInterval, delay, speed, difficultySpeed;
 
     private System.Timers.Timer timer;
 
     //note that source will be interchangeable for player car selection
-    //this will be moved to the big global guy keep an eye out * moved to big global guy!
-    //remembered that i can put multiple variables on the same line
-    //nvm
     Image playerCar = new Image
     {
         Source = "car.png",
@@ -71,16 +69,14 @@ public partial class GamePage : ContentPage
             );
     }
 
-    // Make a TimerTick Method, when the _timeleft is 0, end the game
+    // Make a TimerTick Method, when the _timePassed is 0, end the game
     private void TimerFunction()
     {
-        --_timeLeft;
-        timer_lbl.Text = _timeLeft.ToString();
-        if (_timeLeft == 0)
+        ++_timePassed;
+        timer_lbl.Text = _timePassed.ToString();
+        if (_gamePlaying == false)
         {
             timer.Stop();
-            EndGame();
-            _timeLeft = 60;
         }
     }
 
@@ -88,7 +84,6 @@ public partial class GamePage : ContentPage
     {
         // Set Gameplaying to false
         _gamePlaying = false;
-        _ballMoving = false;
 
         // Hide the buttons to kick the ball
 
@@ -115,8 +110,10 @@ public partial class GamePage : ContentPage
     {
         //setting and resetting values at the top of each game
         _gamePlaying = true;
-        _timeLeft = 60;
-        carInterval = 10000;
+        _timePassed = 0;
+        speed = _timePassed;
+        carInterval = 15000;
+        delay = 1500;
         StartBtn.IsVisible = false;
         ControlGrid.IsVisible = true;
 
@@ -124,23 +121,24 @@ public partial class GamePage : ContentPage
         _carPosition = "centre";
 
         //random moving cars
-        await Task.Delay(500);
+        await AnimateCars();
+        await Task.Delay(delay);
         await AnimateCars();
 
     }
 
+    //!DONE - DO NOT ToUCH!
     //for animating the moving cars
     private async Task AnimateCars()
     {
         while (_gamePlaying)
         {
-            //double roadLength = 577; this is a fixed value so might just forgo having it saved as a variable
-            int whichLane = random.Next(3), whichCar = random.Next(8);
-            //await Cars();
-            //int direction = 1;
-            //string src;
+            int whichLane1 = random.Next(3), whichLane2 = random.Next(3), whichCar = random.Next(8);
 
-            if (whichLane == 0)
+            //to avoid multiple cars appearing in the same lane at the same time
+            if(whichLane2 == whichLane1) { whichLane2 -= 1; }
+
+            if (whichLane1 == 0)
             {
                 // cars will be moving up from bottom to top then disappearing
                 // add a fadeto at the end later for aesthetics, focus on function for now
@@ -152,12 +150,14 @@ public partial class GamePage : ContentPage
                 //changes the car each time to avoid repeats
                 Lane1Car1.Source = cars[whichCar];
 
+                /*//testing label tbr
                 FeedbackLbl.Text = "Ran Car 1";
                 FeedbackLbl.IsVisible = true;
                 await Task.Delay(500);
-                FeedbackLbl.IsVisible = false;
+                FeedbackLbl.IsVisible = false;*/
             }
-            else if (whichLane == 1)
+
+            else if (whichLane1 == 1)
             {
                 // cars will be moving up from bottom to top then disappearing
                 // add a fadeto at the end later for aesthetics, focus on function for now
@@ -169,10 +169,11 @@ public partial class GamePage : ContentPage
                 //changes the car each time to avoid repeats
                 Lane2Car1.Source = cars[whichCar];
 
+                /*//testing label tbr
                 FeedbackLbl.Text = "Ran Car 2";
                 FeedbackLbl.IsVisible = true;
                 await Task.Delay(500);
-                FeedbackLbl.IsVisible = false;
+                FeedbackLbl.IsVisible = false;*/
             }
 
             else
@@ -187,61 +188,87 @@ public partial class GamePage : ContentPage
                 //changes the car each time to avoid repeats
                 Lane3Car1.Source = cars[whichCar];
 
+                /*//testing label tbr
                 FeedbackLbl.Text = "Ran Car 3";
                 FeedbackLbl.IsVisible = true;
                 await Task.Delay(500);
-                FeedbackLbl.IsVisible = false;
+                FeedbackLbl.IsVisible = false;*/
             }
 
-            /*
-             * if (whichLane == 0)
-            {
-                Lane1.Add(car1);
-                await car1.TranslateTo(0, -456, (uint)carInterval);
-                car1.IsVisible = false;
-                await car1.TranslateTo(0, 577, 1000);
+            //await Task.Delay(3000);
+            //second car movement
+            whichCar -= 1;
+            whichCar = Math.Abs(whichCar);
 
-            }
-            else if (whichLane == 1)
+            if (whichLane2 == 0)
             {
-                Lane2.Add(car2);
-                await car2.TranslateTo(0, -456, (uint)carInterval);
-                car2.IsVisible = false;
-                await car2.TranslateTo(0, 577, 1000);
+                // cars will be moving up from bottom to top then disappearing
+                // add a fadeto at the end later for aesthetics, focus on function for now
+                Lane1Car2.IsVisible = true;
+                await Lane1Car2.TranslateTo(0, -456, (uint)carInterval);
+                Lane1Car2.IsVisible = false;
+                await Lane1Car2.TranslateTo(0, 577, 1000);
+
+                //changes the car each time to avoid repeats
+                Lane1Car2.Source = cars[whichCar];
+
+                /*//testing label tbr
+                FeedbackLbl.Text = "Ran Car 1";
+                FeedbackLbl.IsVisible = true;
+                await Task.Delay(500);
+                FeedbackLbl.IsVisible = false;*/
+            }
+
+            else if (whichLane2 == 1)
+            {
+                // cars will be moving up from bottom to top then disappearing
+                // add a fadeto at the end later for aesthetics, focus on function for now
+                Lane2Car2.IsVisible = true;
+                await Lane2Car2.TranslateTo(0, -456, (uint)carInterval);
+                Lane2Car2.IsVisible = false;
+                await Lane2Car2.TranslateTo(0, 577, 1000);
+
+                //changes the car each time to avoid repeats
+                Lane2Car1.Source = cars[whichCar];
+
+                /*//testing label tbr
+                FeedbackLbl.Text = "Ran Car 2";
+                FeedbackLbl.IsVisible = true;
+                await Task.Delay(500);
+                FeedbackLbl.IsVisible = false;*/
             }
 
             else
             {
-                Lane3.Add(car3);
-                await car3.TranslateTo(0, -456, (uint)carInterval);
-                car3.IsVisible = false;
-                await car3.TranslateTo(0, 577, 1000);
+                // cars will be moving up from bottom to top then disappearing
+                // add a fadeto at the end later for aesthetics, focus on function for now
+                Lane3Car2.IsVisible = true;
+                await Lane3Car2.TranslateTo(0, -456, (uint)carInterval);
+                Lane3Car2.IsVisible = false;
+                await Lane3Car2.TranslateTo(0, 577, 1000);
+
+                //changes the car each time to avoid repeats
+                Lane3Car2.Source = cars[whichCar];
+
+                /*//testing label tbr
+                FeedbackLbl.Text = "Ran Car 3";
+                FeedbackLbl.IsVisible = true;
+                await Task.Delay(500);
+                FeedbackLbl.IsVisible = false;*/
             }
-             */
 
-            /* tried this and it didn't work
-             * maybe due to how i set the variables?
-             * or it could just be that it can't read from the array, even when it's converted to a string
-            else
+            //increase the car speed over time
+            if (_timePassed > (speed + 15) && (carInterval != 5000 && delay != 500))
             {
-                src = cars[(whichCar + 1)].ToString();
-                car3.Source = src;
-                Lane3.Add(car3);
-                await car3.TranslateTo(0, -456, (uint)carInterval);
-                car3.IsVisible = false;
-                await car3.TranslateTo(0, 577, 1000);
-            }*/
+                carInterval -= 2500;
 
-            /*// cars will be moving up from bottom to top then disappearing
-            // add a fadeto at the end later for aesthetics, focus on function for now
-            Lane1Car1.IsVisible = true;
-        await Lane1Car1.TranslateTo(0, -456, (uint)carInterval);
-        Lane1Car1.IsVisible = false;
-        await Lane1Car1.TranslateTo(0, 577, 1000);*/
+                if (_timePassed > (speed + 20))
+                {
+                    delay -= 250;
+                }
 
-            /*// Now go back to the centre
-            _carPosition = "centre";
-            await GoalKeeper.TranslateTo(0, 0, 1000);*/
+                speed = _timePassed;
+            }
         }
     }
 
@@ -251,31 +278,28 @@ public partial class GamePage : ContentPage
         timer.Start();
     }
 
+    //function for moving car from left to right
      private void ShootButton_Clicked(object sender, EventArgs e)
     {
-        //annoying asf but I'll rewrite this, just need the visual for now
-        //*made it less annoying already, yippee!
+        //to help read the information on the button
+        //know which button was pressed
         Button btn = (Button)sender;
 
-
-        //i hate nested if statements but what needs to be done needs to be done
-        //this could probably be done with numbers for efficiency but i'm so tired man and this works just fine
-        //this project has crashed so much i'm surprised i haven't completely given up already
-        //moves can to left
+        //moves car to the left
         if (btn.Text == "Left")
         {
             if (_carPosition == "centre")
             {
                 _carPosition = "left";
-                //Lane2.Clear();
-                Lane1.Add(playerCar);
+                playerCarMOVINGL1.IsVisible = true;
+                playerCarMOVINGL2.IsVisible = false;
             }
 
             else if (_carPosition == "right")
             {
                 _carPosition = "centre";
-                //Lane3.Clear();
-                Lane2.Add(playerCar);
+                playerCarMOVINGL3.IsVisible = false;
+                playerCarMOVINGL2.IsVisible = true;
             }
 
             else { }
@@ -287,23 +311,24 @@ public partial class GamePage : ContentPage
             if (_carPosition == "centre")
             {
                 _carPosition = "right";
-                // Lane2.Remove(playerCar); //why aren't you working :(
-                //Lane2.Clear();
-                Lane3.Add(playerCar);
+                playerCarMOVINGL2.IsVisible = false;
+                playerCarMOVINGL3.IsVisible = true;
             }
 
             else if (_carPosition == "left")
             {
                 _carPosition = "centre";
-                //Lane1.Clear();
-                Lane2.Add(playerCar);
+                playerCarMOVINGL1.IsVisible = false;
+                playerCarMOVINGL2.IsVisible = true;
             }
 
             else { }
         }
-        else if (btn.Text == "Centre")
+        else if (btn.Text == "End")
         {
-            //button to be removed; redundant
+            //use as tester for ending game early
+            //tbr
+            EndGame();
         }
 
         /*Keeping for possible car animation, just using static movements for now
@@ -325,50 +350,32 @@ public partial class GamePage : ContentPage
         }*/
     }
 
-    //was for changing sources, decided to try an array instaed
-    /*private async Task Cars()
+    //generate game grid
+    private async Task Grid()
     {
-        int whichCar = random.Next(3);
-
-        switch (whichCar)
+        Grid normal = new Grid
         {
-            case 0:
-                car1.Source = "ambulance.png";
-                car2.Source = "blackviper.png";
-                car3.Source = "minivan.png";
-                car4.Source = "taxi.png";
-                car5.Source = "audi.png";
-                car6.Source = "minitruck.png";
-                break;
+            ColumnDefinitions =
+            {
+                new ColumnDefinition(),
+                new ColumnDefinition(),
+                new ColumnDefinition()
+            }
 
-            case 1:
-                car1.Source = "audi.png";
-                car2.Source = "minitruck.png";
-                car3.Source = "police.png";
-                car4.Source = "truck.png";
-                car5.Source = "minivan.png";
-                car6.Source = "taxi.png";
-                break;
-
-            case 2:
-                car1.Source = "taxi.png";
-                car2.Source = "truck.png";
-                car3.Source = "police.png";
-                car4.Source = "minivan.png";
-                car5.Source = "ambulance.png";
-                car6.Source = "blackviper.png";
-                break;
-
-            default:
-                car1.Source = "taxi.png";
-                car2.Source = "truck.png";
-                car3.Source = "police.png";
-                car4.Source = "minitruck.png";
-                car5.Source = "minivan.png";
-                car6.Source = "ambulance.png";
-                break;
-        }
-    }*/
+        };
+        
+        
+        Grid hard = new Grid
+        {
+            ColumnDefinitions =
+            {
+                new ColumnDefinition(),
+                new ColumnDefinition(),
+                new ColumnDefinition(),
+                new ColumnDefinition()
+            }
+        };
+    }
 
     /*Using
      * 

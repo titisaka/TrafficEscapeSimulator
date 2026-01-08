@@ -50,7 +50,7 @@
                                TextColor="White"/>
                     <Label 
                                 x:Name="timer_lbl"
-                                Text="60"
+                                Text="0"
                                 FontSize="16" 
                                 FontAttributes="Bold"
                                 TextColor="White"/>
@@ -104,7 +104,17 @@
                            IsVisible="False"
                            ZIndex="1"/>
 
-
+                    <Image 
+                           x:Name="playerCarMOVINGL1" 
+                           Source="car.png" 
+                           WidthRequest="128"
+                           Aspect="Fill"
+                           HeightRequest="128"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           Margin="0,100,0,0"
+                           IsVisible="False"
+                           ZIndex="1"/>
                 </Grid>
 
                 <Grid Grid.Column="1" x:Name="Lane2">
@@ -132,7 +142,17 @@
                                IsVisible="False"
                                ZIndex="1"/>
 
-
+                    <Image 
+                           x:Name="playerCarMOVINGL2" 
+                           Source="car.png" 
+                           WidthRequest="128"
+                           Aspect="Fill"
+                           HeightRequest="128"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           Margin="0,100,0,0"
+                           IsVisible="True"
+                           ZIndex="1"/>
                     
 
                 </Grid>
@@ -160,6 +180,17 @@
                                Margin="0,100,0,0"
                                IsVisible="False"
                                ZIndex="1"/>
+                    <Image 
+                           x:Name="playerCarMOVINGL3" 
+                           Source="car.png" 
+                           WidthRequest="128"
+                           Aspect="Fill"
+                           HeightRequest="128"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           Margin="0,100,0,0"
+                           IsVisible="False"
+                           ZIndex="1"/>
                     
                 </Grid>
                 
@@ -204,7 +235,7 @@
                             Clicked="ShootButton_Clicked"/>
 
                     <Button
-                            Text="Centre" 
+                            Text="End" 
                             Grid.Column="1"
                             FontSize="16"
                             BackgroundColor="Red"

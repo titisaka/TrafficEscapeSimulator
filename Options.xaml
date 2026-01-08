@@ -5,8 +5,34 @@
              Title="Options">
     <VerticalStackLayout>
         <Label 
-            Text="Options"
+            Text="Difficulty"
+            FontSize="32" 
+            FontAttributes="Bold"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+        <HorizontalStackLayout
+            HorizontalOptions="Center">
+            <Button
+                    x:Name="NormalBtn" 
+                    Text="Normal" 
+                    FontSize="21"
+                    Padding="20,10"
+                    Margin="20"
+                    BackgroundColor="Green"
+                    TextColor="White"
+                    Clicked="Difficulty"
+                    IsEnabled="False"/>
+            
+            <Button
+                x:Name="HardBtn"
+                Text="Hard" 
+                FontSize="21"
+                Padding="20,10"
+                Margin="20"
+                BackgroundColor="Green"
+                TextColor="White"
+                Clicked="Difficulty"/>
+            
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
